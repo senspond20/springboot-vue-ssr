@@ -1,3 +1,7 @@
+IntelliJ IDE
 
+## Backend
++ JDK 1.8 / Maven
 
-intelliJ IDE
+## FrontEnd
++ VueJs
