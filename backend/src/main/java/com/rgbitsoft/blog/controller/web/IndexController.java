@@ -1,4 +1,4 @@
-package com.rgbitsoft.blog.controller;
+package com.rgbitsoft.blog.controller.web;
 
 import com.rgbitsoft.blog.service.RendererService;
 import lombok.RequiredArgsConstructor;
@@ -14,8 +14,8 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Model model){
-//        String html = renderService.renderPage("/");
-//        model.addAttribute("rendered", html);
+        String html = renderService.renderPage("/");
+        model.addAttribute("rendered", html);
         return "index";
     }
 }
