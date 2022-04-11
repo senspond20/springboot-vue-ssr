@@ -57,7 +57,7 @@ public class ServerSideRenderer {
     private void loadFiles(ScriptEngine engine, ScriptContext context) throws IOException, ScriptException {
 
         String root = System.getProperty("user.dir");
-        String vueRenderer = "/node_modules/vue-server-renderer/";
+        String vueRenderer = "/frontend/node_modules/vue-server-renderer/";
         Path path = Path.of(root + vueRenderer);
         Path file = path.resolve("basic.js");
 
