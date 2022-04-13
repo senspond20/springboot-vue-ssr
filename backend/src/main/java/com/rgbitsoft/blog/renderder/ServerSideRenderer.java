@@ -14,12 +14,16 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.script.SimpleScriptContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ServerSideRenderer {
+    private Logger logger = LoggerFactory.getLogger(ServerSideRenderer.class);
+
     private ScriptEngine getEngine() {
         return new ScriptEngineManager().getEngineByName("graal.js");
     }
@@ -33,12 +37,13 @@ public class ServerSideRenderer {
         ScriptEngine engine = getEngine();
         ScriptContext context = getContext();
         Bindings engineScope = engineSetting(engine, context);
-
-        engineScope.put("rendered", null);    //Global variable declaration
-        engineScope.put("route", route);      //Global variable declaration
+        logger.info("Server Side Rendering - url : {} " , route);
+        System.out.println(engineScope);
+        engineScope.put("rendered", null);             // Global variable declaration
+        engineScope.put("route", route);                     // Global variable declaration
         engine.eval(read("static/js/server.js"), context);
 
-        return context.getAttribute("rendered").toString();//Get rendered variable to String type
+        return context.getAttribute("rendered").toString();  // Get rendered variable to String type
     }
 
     private Bindings engineSetting(ScriptEngine engine, ScriptContext context) throws ScriptException, IOException {

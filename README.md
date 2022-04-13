@@ -6,5 +6,14 @@ IntelliJ IDE
 + graalvm.js 19.2 
 
 ## FrontEnd
-+ VueJs ( vue 3.2.13 )
++ VueJs ( vue 2.6 )
+
+
+```
+npm install
+
+npm build
+
+mvn spring-boot:run
+```
 

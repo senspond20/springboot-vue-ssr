@@ -12,12 +12,11 @@ public class WordService {
 
         Map<String, String> map = new HashMap<String, String>();
 
-        if (pageId.equals("firstPage")) {
-            map.put("word", "first page data");
+        if (pageId.equals("blogPage")) {
+            map.put("word", "home page data");
         } else {
-            map.put("word", "second page data");
+            map.put("word", "blog page data");
         }
-
         return map;
     }
 }
