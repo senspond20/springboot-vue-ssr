@@ -26,10 +26,10 @@ public class IndexController {
         return "admin";
     }
 
-    @GetMapping("/{route}")
-    public String router(Model model, @PathVariable String route){
-        String html = renderService.renderPage("/" + route);
-        model.addAttribute("rendered", html);
-        return "index";
-    }
+//    @GetMapping("/{route}")
+//    public String router(Model model, @PathVariable String route){
+//        String html = renderService.renderPage("/" + route);
+//        model.addAttribute("rendered", html);
+//        return "index";
+//    }
 }
