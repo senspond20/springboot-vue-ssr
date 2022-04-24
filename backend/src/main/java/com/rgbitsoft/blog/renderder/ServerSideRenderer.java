@@ -23,6 +23,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ServerSideRenderer {
     private Logger logger = LoggerFactory.getLogger(ServerSideRenderer.class);
+    private static final String VUE_RENDERER = System.getProperty("user.dir") + "/frontend-public/node_modules/vue-server-renderer/";
+
 
     private ScriptEngine getEngine() {
         return new ScriptEngineManager().getEngineByName("graal.js");
@@ -38,10 +40,10 @@ public class ServerSideRenderer {
         ScriptContext context = getContext();
         Bindings engineScope = engineSetting(engine, context);
         logger.info("Server Side Rendering - url : {} " , route);
-        System.out.println(engineScope);
+        logger.info("enginScope  : {}", engineScope);
         engineScope.put("rendered", null);             // Global variable declaration
         engineScope.put("route", route);                     // Global variable declaration
-        engine.eval(read("static/js/server.js"), context);
+        engine.eval(read("static/public/js/server.js"), context);
 
         return context.getAttribute("rendered").toString();  // Get rendered variable to String type
     }
@@ -60,10 +62,7 @@ public class ServerSideRenderer {
         return engineScope;
     }
     private void loadFiles(ScriptEngine engine, ScriptContext context) throws IOException, ScriptException {
-
-        String root = System.getProperty("user.dir");
-        String vueRenderer = "/frontend/node_modules/vue-server-renderer/";
-        Path path = Path.of(root + vueRenderer);
+        Path path = Path.of(VUE_RENDERER);
         Path file = path.resolve("basic.js");
 
         Resource resource = new UrlResource(file.toUri());
