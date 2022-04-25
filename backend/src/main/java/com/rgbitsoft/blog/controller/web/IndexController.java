@@ -20,11 +20,16 @@ public class IndexController {
         return "index";
     }
 
-    @GetMapping("/{route}")
-    public String second(Model model, @PathVariable String route){
-        String html = renderService.renderPage("/" + route);
-        model.addAttribute("rendered", html);
-        return "index";
+    @GetMapping("/admin")
+    public String admin(Model model){
+        model.addAttribute("title", "Admin Page");
+        return "admin";
     }
 
+//    @GetMapping("/{route}")
+//    public String router(Model model, @PathVariable String route){
+//        String html = renderService.renderPage("/" + route);
+//        model.addAttribute("rendered", html);
+//        return "index";
+//    }
 }

@@ -1,0 +1,64 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+
+spring:
+  profiles:
+    active: dev
+
+# Local 환경
+---
+spring:
+  profiles.active: local
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    properties:
+      hibernate:
+        #dialect: org.hibernate.dialect.MariaDB103Dialect # Maria 10.03
+        dialect : org.hibernate.dialect.Oracle10gDialect # oracle11g
+        storage_engine: innodb
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+    h2:
+      console:
+        enabled: true
+  datasource:
+    hikari:
+      jdbc-url: jdbc:h2:mem://localhost/~/testdb;MODE=ORACLE
+
+# 개발환경
+---
+spring:
+  config.activate.on-profile: dev
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+  datasource:
+    hikari:
+      driver-class-name: oracle.jdbc.driver.OracleDriver
+      jdbc-url: jdbc:oracle:thin:@172.30.1.10:1521/xe
+      password: sensdev
+      username: sensdev
+
+logging.level.root: info
+
+
+# 운영환경
+
+
+
+
+
+

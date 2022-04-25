@@ -1,4 +1,4 @@
-package com.rgbitsoft.blog.renderder;
+package com.rgbitsoft.blog.config;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,6 +23,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class ServerSideRenderer {
     private Logger logger = LoggerFactory.getLogger(ServerSideRenderer.class);
+    private static final String VUE_RENDERER = System.getProperty("user.dir") + "/frontend-public/node_modules/vue-server-renderer/";
+
 
     private ScriptEngine getEngine() {
         return new ScriptEngineManager().getEngineByName("graal.js");
@@ -32,38 +34,52 @@ public class ServerSideRenderer {
         return new SimpleScriptContext();
     }
 
+    /**
+     * @param route
+     * @return
+     * @throws ScriptException
+     * @throws IOException
+     */
     public String render(String route) throws ScriptException, IOException {
 
         ScriptEngine engine = getEngine();
         ScriptContext context = getContext();
         Bindings engineScope = engineSetting(engine, context);
         logger.info("Server Side Rendering - url : {} " , route);
-        System.out.println(engineScope);
+        logger.info("enginScope  : {}", engineScope);
         engineScope.put("rendered", null);             // Global variable declaration
         engineScope.put("route", route);                     // Global variable declaration
-        engine.eval(read("static/js/server.js"), context);
+        engine.eval(read("static/public/js/server.js"), context);
 
         return context.getAttribute("rendered").toString();  // Get rendered variable to String type
     }
 
+    /**
+     * @param engine
+     * @param context
+     * @return
+     * @throws ScriptException
+     * @throws IOException
+     */
     private Bindings engineSetting(ScriptEngine engine, ScriptContext context) throws ScriptException, IOException {
         context.setBindings(engine.createBindings(), ScriptContext.ENGINE_SCOPE);
         Bindings engineScope = context.getBindings(ScriptContext.ENGINE_SCOPE);
 
         engine.setContext(context);
 
-        engine.eval(
-                "var process = { env: { VUE_ENV: 'server', NODE_ENV: 'production' }}; this.global = { process: process };",
-                context);
+        engine.eval("var process = { env: { VUE_ENV: 'server', NODE_ENV: 'production' }}; this.global = { process: process };",                context);
         loadFiles(engine, context);// vue-server-Loading renderer
-
         return engineScope;
     }
-    private void loadFiles(ScriptEngine engine, ScriptContext context) throws IOException, ScriptException {
 
-        String root = System.getProperty("user.dir");
-        String vueRenderer = "/frontend/node_modules/vue-server-renderer/";
-        Path path = Path.of(root + vueRenderer);
+    /**
+     * @param engine
+     * @param context
+     * @throws IOException
+     * @throws ScriptException
+     */
+    private void loadFiles(ScriptEngine engine, ScriptContext context) throws IOException, ScriptException {
+        Path path = Path.of(VUE_RENDERER);
         Path file = path.resolve("basic.js");
 
         Resource resource = new UrlResource(file.toUri());

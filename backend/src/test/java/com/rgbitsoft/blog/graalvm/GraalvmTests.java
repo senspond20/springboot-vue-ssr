@@ -24,7 +24,7 @@ public class GraalvmTests {
     @Test
     public void testReadFileJS() throws ScriptException {
         ScriptEngine engine = new ScriptEngineManager().getEngineByName("graal.js"); //  --- (1)
-        engine.eval(read("static/js/test.js"));
+        engine.eval(read("static/public/js/server.js"));
     }
 
 }

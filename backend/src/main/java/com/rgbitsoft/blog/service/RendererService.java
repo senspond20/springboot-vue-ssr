@@ -1,6 +1,6 @@
 package com.rgbitsoft.blog.service;
 
-import com.rgbitsoft.blog.renderder.ServerSideRenderer;
+import com.rgbitsoft.blog.config.ServerSideRenderer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
