@@ -69,6 +69,7 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
          return authorities;
       }
    };
+   
 
    @Override
    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
